@@ -40,6 +40,8 @@ public class MainActivity extends AppCompatActivity
 
     boolean validUsername = false;
 
+    EmployeeListAdapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -70,6 +72,8 @@ public class MainActivity extends AppCompatActivity
 
         //setup and initialize arrayList
         listOfEmployees = new ArrayList<Employee>();
+        fillListView();
+
     }
 
     private void registerButtonClickEvent()
@@ -151,6 +155,8 @@ public class MainActivity extends AppCompatActivity
 
             Log.d("User added: ", "The user was added to the list");
             tv_j_errorMsg.setVisibility(View.INVISIBLE);
+            //needed to make sure listview shows employees that were recently added
+            adapter.notifyDataSetChanged();
             clearTextboxes();
         }
         else
@@ -189,5 +195,14 @@ public class MainActivity extends AppCompatActivity
         }
 
         return true;
+    }
+
+    private void fillListView()
+    {
+        adapter = new EmployeeListAdapter(this, listOfEmployees);
+
+        //set the listview adapter
+        lv_j_employeeList.setAdapter(adapter);
+
     }
 }
